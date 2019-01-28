@@ -1,0 +1,21 @@
+<div class="category-nav">
+  <div class="container">
+    <div class="row">
+      {{ current_path }}
+      {{ current_path|urlencode }}
+      <div class="col">
+        {% url 'buyersguide-home' as home_url %}
+        <a class="{% if current_path == home_url %}active{% endif %}" href="{{ home_url }}">Home</a>
+
+        {% for cat in categories %}
+        {% url 'category-view' category.name as category_url %}
+        {% url 'category-view' cat.name as cat_url %}
+        <a class="{% if cat_url == category_url %}active{% endif %}" href="{{ cat_url }}">{{ cat.name }}</a>
+        {% endfor %}
+
+        {% url 'about-view' as about_url %}
+        <a class="{% if current_path == about_url %}active{% endif %}" href="{{ about_url }}">About the Guide</a>
+      </div>
+    </div>
+  </div>
+</div>
