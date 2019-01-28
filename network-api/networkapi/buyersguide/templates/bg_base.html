@@ -1,3 +1,5 @@
+{% load nav_tags %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -45,7 +47,8 @@
 
     {% include "./primary_nav.html" %}
     <div class="underneath-screen-overlay">
-      <div class="category-nav">
+      {% buyers_guide_nav categories category request.path %}
+      <!-- <div class="category-nav">
         <div class="container">
           <div class="row">
             <div class="col">
@@ -61,7 +64,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="main-content {% block main-content-class %}pb-5{% endblock %}">{% block guts %}{% endblock %}</div>
 
