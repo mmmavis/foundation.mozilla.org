@@ -13,7 +13,8 @@ import News from "./components/news/news.jsx";
 import PulseProjectList from "./components/pulse-project-list/pulse-project-list.jsx";
 
 import primaryNav from "./primary-nav.js";
-import navNewsletter from "./nav-newsletter.js";
+// import navNewsletter from "./nav-newsletter.js";
+import NavNewsletter from "./components/nav-newsletter/nav-newsletter.jsx";
 
 const SHOW_MEMBER_NOTICE = false;
 
@@ -173,7 +174,7 @@ let main = {
     onScroll();
 
     primaryNav.init();
-    navNewsletter.init(networkSiteURL, csrfToken);
+    // navNewsletter.init(networkSiteURL, csrfToken);
 
     // Extra tracking
 
@@ -240,6 +241,33 @@ let main = {
           );
         })
       );
+    }
+
+    // Newsletter elements on nav
+    if (document.querySelectorAll(`.nav-newsletter`)) {
+      var elements = document.querySelectorAll(`.nav-newsletter`);
+      console.log(elements);
+
+      if (elements.length) {
+        elements.forEach(element => {
+          var props = element.dataset;
+
+          props.apiUrl = `${networkSiteURL}/api/campaign/signups/${props.signupId ||
+            0}/`;
+
+          props.csrfToken = props.csrfToken || csrfToken;
+          props.isHidden = false;
+
+          apps.push(
+            new Promise(resolve => {
+              ReactDOM.render(
+                <NavNewsletter {...props} whenLoaded={() => resolve()} />,
+                element
+              );
+            })
+          );
+        });
+      }
     }
 
     // Embed additional instances of the Join Us box that don't need an API exposed (eg: Homepage)
